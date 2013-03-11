@@ -1,0 +1,20 @@
+<html>
+    <!--
+    demonstrates issues with mutable shared state and javascripts evenloop model.
+    -->
+    <script>
+        function printSmth() {
+            //x is 1
+            var x = 1;
+            // in one millisecond from now, set x=2
+            setTimeout(function() { x = 2; }, 1);
+            // whithout delay, print x to dom (x should be 1)
+            // firefox prints 1, chrome prints 2.
+            setTimeout(function() { document.getElementById("here").innerHTML = x; }, 0);
+        }
+
+        printSmth()
+    </script>
+
+    <h1 id="here"/>
+</html>
