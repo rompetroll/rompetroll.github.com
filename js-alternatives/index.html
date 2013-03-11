@@ -192,7 +192,7 @@
 
         <section class="slide" id="frameworks">
         <h2>Abstraction frameworks</h2>
-        <h3>Work simplified APIs</h3>
+        <h3>Work with simplified abstractions</h3>
         <p>examples: jquery, mootools, dojo, prototype</p>
         <h3>Benefits</h3>
         <ul>
@@ -204,13 +204,14 @@
             <li>more often updated than ECMAScript
             <ul>
                 <li>latest jquery solves endless callback nesting by introducing promises
-            </li>
+                </li>
+            </ul>
         </ul>
         </section>
 
         <section class="slide" id="frameworks2">
         <h2>Abstraction frameworks</h2>
-        <h3>Work simplified abstractions</h3>
+        <h3>Work with simplified abstractions</h3>
         <h3>But..</h3>
         <ul>
             <li>Still javascript
@@ -220,7 +221,87 @@
         </section>
 
 
+        <section class="slide" id="es6">
+        <h2>ECMAScript 6</h2>
+        <h3>Wait for the next standard</h3>
+        <ul>
+            <li>Work in progress
+            <li>It's a huge spec, will add many new features
+            <li>Will certainly also fix many issues
+        </ul>
+        <h3>But..</h3>
+        <ul>
+            <li>Won't change Javascript fundamentally
+            <li>Can't use it NOW
+        </ul>
+        </section>
+
+        <section class="slide" id="alts">
+        <h2>Compile to Javascript</h2>
+        <p>There is a huge list of languages that compile to JS</p>
+        <a href="http://altjs.org/">altjs.org</a>
+        </section>
+
+        <section class="slide" id="alts-2">
+        <h2>Compile to Javascript</h2>
+        <h3>(Potential) Benefits</h3>
+        <p style="font-size: 16px">... or what I would consider benefits</p>
+        <ul>
+            <li>Static typing and type checking
+            <li>Compiler optimizations
+            <li>modern, concise syntax
+            <li>correctness!
+        </ul>
+        </section>
+
+        <section class="slide" id="alts-3">
+        <h2>Compile to Javascript</h2>
+        <h3>Drawbacks</h3>
+        <ul>
+            <li>Errors not caught by compiler point to produced js. debugging?
+            <li>Need a build system
+            <li>Depending on compiler, performance could suffer
+        </ul>
+        </section>
+
+        <section class="slide" id="supersets">
+        <h2>backward-compatible Superset languages</h2>
+        <ul>
+            <li>Languages add some features on top of javascript.
+            <li>Coffeescript is very close to JS, with less typing
+            <code><script type="syntaxhighlighter" class="brush: js">
+                    square = (x) -> x * x //coffeescript function
+
+                    square = function(x) { // same in js
+                    return x * x;
+                    };
+            </script></code>
+            <li>Microsoft's Typescript adds Types. Yay!
+            <code><script type="syntaxhighlighter" class="brush: js">
+                    function greeter(person: string) {
+                    return "Hello, " + person;
+                    };
+                    greeter([1,2,3]);
+
+                    //compiler says:
+                    greeter.ts(4,9): Supplied parameters do not match any signature of call target
+            </script></code>
+            </li>
+        </ul>
+        </section>
+
+        <section class="slide" id="supersets-2">
+        <h2>Superset languages</h2>
+        <ul>
+            <li>familiar syntax and programming model
+            <li>Compilers available as node packages
+            <li>tooling includes on-the-fly mode for development
+            <li>CoffeeScript widely adopted. 
+            <li>TypeScript adds what's lacking most: Types
+        </ul>
+        </section>
         <!-- End slides. -->
+
         <!-- Begin extension snippets. Add or remove as needed. -->
 
         <!-- deck.navigation snippet -->
@@ -230,7 +311,6 @@
         <!-- deck.status snippet -->
         <p class="deck-status">
         <span class="deck-status-current"></span>
-        /
         <span class="deck-status-total"></span>
         </p>
 
