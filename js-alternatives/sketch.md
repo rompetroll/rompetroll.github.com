@@ -10,8 +10,10 @@
  * mobil js vs web js?
  * dynamic -> depends on unit tests.
  * at the same time it's hard to unit test (installation of testing environment is hard. hard to cover all browsers)
- * too forgiving. e.g. gives you rather NaN than an error. even tries to fix syntax for you (inject semicolons)
- * event bubbling in the browser is hard
+ * too forgiving. 
+    - gives you rather NaN than an error
+    - even tries to fix incorrect syntax (inject semicolons, allows var without var keyword)
+    -> leads to bugs. which mostly seem mystical to the dev
  * awful type coercion
         '' == '0' //false
         0 == '' //true
@@ -23,12 +25,15 @@
         null == undefined //true
         " \t\r\n " == 0 //true
 
+ * buzzword alarm: callback hell :)
+
  * mutable, shared state
         var x = 1;
         setTimeout(function() { x = 2; }, 2);
         setTimeout(function() { console.log(x); }, 0);
 
-  -> impossible to say what will be printed out
+ * impossible to say what will be printed out
+     - test.html and pngs
 
 * shortcomings of dynamic languages
 
@@ -53,6 +58,7 @@
     -> abstract many implementation details away
     -> handle browser incompatiblities
     -> but they basically still are javascript
+    -> latest jsquery replaces callbacks with promises.
 
   - new javascript standard ECMA6. will add new language features like classes
 
