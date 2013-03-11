@@ -29,6 +29,11 @@
 
         <!-- Required Modernizr file -->
         <script src="modernizr.custom.js"></script>
+        <style type="text/css">
+            .deck-container code {
+                font-size: 14px; !important;
+            }
+        </style>
     </head>
     <body class="deck-container">
 
@@ -36,20 +41,186 @@
 
         <section class="slide" id="title-slide">
         <h1> <img src="assets/Fear-Of-The-Dark.png"></h1>
-        <h3>Programming in the Browser</h3>
+        <h2>Programming the browser is hard</h2>
+        <h3>Alternatives to Javascript</h3>
         </section>
 
-        <section class="slide">
-        <h1>Content</h1>
+        <section class="slide" id="js-overview">
+        <h2>Javascript overview</h1>
+        <p>a dynamic prototype based language</p>
+        <ul>
+            <li>since 1996 (Netscape 2)</li>
+            <li>1999 ECMAScript 3</li>
+            <li>2005 Ajax</li>
+            <li>Standard unchanged until 2009: ECMAScript 5</li>
+            <li>2011 ECMAScript 5.1</li>
+        </ul>
         </section>
 
-        <section class="slide">
-        <h1>Here</h1>
+        <section class="slide" id="current-state">
+        <h2>Current state</h2>
+        <h3>... The good parts</h3>
+        <ul>
+            <li>generally: we have lambdas and objects</li>
+            <li>"use strict"</li>
+            <li>much more consistent across browsers than it used to be</li>
+            <li>greatly improved tooling</li>
+            <li>People care about JS<br/>
+            -> best practises, books, libraries
+            </li>
+            <li>Even (modern) mobile browsers ECMA 5.1 compatible</li>
+        </ul>
+
         </section>
+
+        <section class="slide" id="current-state-2">
+        <h2>Current state</h2>
+        <h3>Some bad parts</h3>
+        <ul>
+            <li>Just like Java, lot's of boilerplate</li>
+            <li>still some browser incompatibilities</li>
+            <li>"use strict" not before IE10</li>
+            <li> <a href="https://www.destroyallsoftware.com/talks/wat">wat video showing some stupid stuff that Javascript does</a></li>
+            <li>Callback Hell (Buzzword alarm)</li>
+            <code>
+                <script type="syntaxhighlighter" class="brush: js">
+                    function getPhoto(tag, handlerCallback) {
+                        asyncGet(requestTag(tag), function(photoList) {
+                            asyncGet(requestOneFrom(photoList), function(photoSizes) {
+                                handlerCallback(sizesToPhoto(photoSizes));
+                            });
+                        });
+                    }
+
+                    getPhoto('tokyo', function(photo) { /*... do something with photo ...*/ });
+                </script>
+            </code>
+        </ul>
+        </section>
+
+        <section class="slide" id="issues-1">
+        <h2>Language issues</h2>
+        <h3>JS is too forgiving - for it's own bad</h3>
+        <ul>
+            <li>Function parameters not enforced</li>
+            <code> <script type="syntaxhighlighter" class="brush: js">
+                    function test(oneparam) { /*...*/ }
+                    test() //works
+                    test(1, 2, "three") //works
+            </script></code>
+            <li>rather returns NaN or null instead of error
+            <li>swallows missing semicolons or var keywords
+            <li>complex: many ways to do the same thing
+            <li>this causes unexpected, mystical, hard to debug behavior.
+        </ul>
+        </section>
+
+        <section class="slide" id="issues-2">
+        <h2>Language issues</h2>
+        <h3>Dynamic typing</h3>
+        <ul>
+            <li>dynamic typing means highly dependent on unit testing</li>
+            <li>at the same time hard to test (runs in browser)</li>
+            <li>awful type casting</li>
+        </ul>
+        <code> <script type="syntaxhighlighter" class="brush: js">
+                '' == '0' //false
+                0 == '' //true
+                0 == '0' //true
+                false == 'false' //false
+                false == '0' //false
+                false == undefined //false
+                false == null //false
+                null == undefined //true
+                " \t\r\n " == 0 //true
+        </script></code>
+        </section>
+
+        <section class="slide" id="issues-3">
+        <h2>Language issues</h2>
+        <h3>shared mutable state</h3>
+        <ul>
+            <li>callbacks and lambdas vs shared mutable state.</li>
+            <li>espacially bad in combination with global scope</li>
+            <li>single threaded eventloop also no guarantee for correct concurrency.</li>
+            <li>example on next slide</li>
+        </ul>
+        </section>
+
+        <section class="slide" id="issues-4">
+        <h2>Language issues</h2>
+        <h3>shared mutable state</h3>
+        <code> <script type="syntaxhighlighter" class="brush: js">
+                function printSmth() {
+                    //x is 1
+                    var x = 1;
+                    // in one millisecond from now, set x=2
+                    setTimeout(function() { x = 2; }, 1);
+                    // whithout delay, print x to dom (x should be 1)
+                    // firefox prints 1, chrome prints 2.
+                    setTimeout(function() { document.getElementById("here").innerHTML = x; }, 0);
+                }
+
+                printSmth()
+        </script></code>
+        <div style="float:left; margin-top: 20px; margin-right: 20px;"> <img src="assets/chrome-test.png"></div>
+        <div style="float: left;margin-top: 20px;"> <img src="assets/firefox-test.png"></div>
+        </section>
+
+        <section class="slide" id="whatnow">
+        <h2>What now?</h2>
+        <h3></h3>
+        <h3>a) So what?</h3>
+        <ul>
+            <p/>
+            <p>Just know what you're doing</p>
+            <p>and deal with what we have</p>
+        </ul>
+        </section>
+
+        <section class="slide" id="whatnow2">
+        <h2>What now?</h2>
+        <h3></h3>
+        <h3>b) Look for improvements</h3>
+        <ol>
+            <li>Javascript frameworks</li>
+            <li>ECMAScript 6 (Harmony)</li>
+            <li>Alternative languages</li>
+        </ol>
+        </section>
+
+
+        <section class="slide" id="frameworks">
+        <h2>Abstraction frameworks</h2>
+        <h3>Work simplified APIs</h3>
+        <p>examples: jquery, mootools, dojo, prototype</p>
+        <h3>Benefits</h3>
+        <ul>
+            <li>nicer sytax than native js
+            <li>rich set of functions for easier data processing
+            <li>work on a higher abstraction level<br/>
+            -> hide the dirty work like browser incompatibilities<br/>
+            </li>
+            <li>more often updated than ECMAScript
+            <ul>
+                <li>latest jquery solves endless callback nesting by introducing promises
+            </li>
+        </ul>
+        </section>
+
+        <section class="slide" id="frameworks2">
+        <h2>Abstraction frameworks</h2>
+        <h3>Work simplified abstractions</h3>
+        <h3>But..</h3>
+        <ul>
+            <li>Still javascript
+            <li>General purpose frameworks are ofter overkill
+            <li>frameworks do not always do things the way you want
+        </ul>
+        </section>
+
 
         <!-- End slides. -->
-
-
         <!-- Begin extension snippets. Add or remove as needed. -->
 
         <!-- deck.navigation snippet -->
@@ -76,7 +247,6 @@
 
         <!-- End extension snippets. -->
 
-
         <!-- Required JS files. -->
         <script src="jquery-1.7.2.min.js"></script>
         <script src="core/deck.core.js"></script>
@@ -90,6 +260,7 @@
         <script src="extensions/navigation/deck.navigation.js"></script>
         <script src="extensions/scale/deck.scale.js"></script>
 
+        <script src="highlight.js"></script>
         <!-- Initialize the deck. You can put this in an external file if desired. -->
         <script>
             $(function() {
