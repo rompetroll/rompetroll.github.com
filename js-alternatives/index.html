@@ -221,6 +221,18 @@
         </section>
 
 
+        <section class="slide" id="frameworks2">
+        <h2>Small Libraries</h2>
+        <h3>Specialized > general purpose</h3>
+        <ul>
+            <li>Instead of large framework like jquery use specialized libs
+            <li>do one thing, but do it well
+            <li>same benefits otherwise (abstraction, syntax)
+            <li>compose with other small libs to get exactly what you need
+            <li>example: <a href="https://github.com/cujojs/when">when.js</a> instead of jquery promises
+        </ul>
+        </section>
+
         <section class="slide" id="es6">
         <h2>ECMAScript 6</h2>
         <h3>Wait for the next standard</h3>
@@ -238,48 +250,122 @@
 
         <section class="slide" id="alts">
         <h2>Compile to Javascript</h2>
-        <p>There is a huge list of languages that compile to JS</p>
+        <p>There is a long list of languages that compile to JS</p>
         <a href="http://altjs.org/">altjs.org</a>
+        <br/>
         </section>
 
-        <section class="slide" id="alts-2">
+        <section class="slide" id="alts-benefits">
         <h2>Compile to Javascript</h2>
         <h3>(Potential) Benefits</h3>
         <p style="font-size: 16px">... or what I would consider benefits</p>
         <ul>
             <li>Static typing and type checking
-            <li>Compiler optimizations
+            <li>In some cases, re-use tooling from other langs
             <li>modern, concise syntax
             <li>correctness!
+            <li>Language-enforced modularity -> maintainable codebases by default
+            <li>Size of processed JS should not be larger than handwritten JS - if gzipped
+            <li>Performance gains
         </ul>
         </section>
 
-        <section class="slide" id="alts-3">
+        <section class="slide" id="alts-performance">
+        <h2>Compile to Javascript</h2>
+        <h3>Did you say performance gains?</h3>
+        <ul>
+            <li>Handwritten javascript can be just as fast, of course
+            <li>But if code is written for clarity...</br>
+            ...Compilers can optimize</li>
+            <li>Most gain from established compilers. 
+            <li>Example: <a href="https://github.com/kripken/emscripten/wiki">emscripten</a>. C++ -> LLVM bytecode -> JS
+            <li>Example: recursion can be compiled to loops
+            <li>Other example
+            <code> <script type="syntaxhighlighter" class="brush: js">
+                    //you write something that is equivalent to
+                    var x = ["hello", "world"].join(" ");
+                    //compiler will produce
+                    var x="hello world";
+            </script></code></li>
+        </ul>
+        </section>
+
+        <section class="slide" id="alts-drawbacks">
         <h2>Compile to Javascript</h2>
         <h3>Drawbacks</h3>
         <ul>
-            <li>Errors not caught by compiler point to produced js. debugging?
+            <li>Harder to get "up and running"
+            <li>Debugging? Errors not caught by compiler point to produced js.
             <li>Need a build system
-            <li>Depending on compiler, performance could suffer
+            <li>Depending on language, you face a learning curve
+            <li>This is a rather new thing - compiler bugs to be expected
+            <li>performance gains not guaranteed. In many cases it could go down as well
+            <li>Does not solve DOM-testing problems
         </ul>
         </section>
 
-        <section class="slide" id="supersets">
-        <h2>backward-compatible Superset languages</h2>
+        <section class="slide" id="alts-drawbacks">
+        <h2>JS to JS</h2>
+        <h3>Google Closure</h3>
         <ul>
-            <li>Languages add some features on top of javascript.
-            <li>Coffeescript is very close to JS, with less typing
-            <code><script type="syntaxhighlighter" class="brush: js">
-                    square = (x) -> x * x //coffeescript function
+            <li>compiles javascript to (optimized) javascript
+            <li>Not only compression, but algorithm optimizations aswell
+            <li>Compiler will provide errors - kinda like jslint
+            <li>Also comes with library: widgets, controls, templating
+            <li>Can be used like YUI or JAWR -> low hanging fruit
+        </ul>
+        </section>
 
-                    square = function(x) { // same in js
+        <section class="slide" id="coffeescript">
+        <h2>Languages that improve JS</h2>
+        <h3>Conciseness: Coffeescript</h3>
+        <ul>
+            <li>Coffeescript is very close to JS, with less typing
+            <li>Same semantics, more pleasant syntax
+            <li>Therefore, you can convert both ways: <a href="http://js2coffee.org/">js2coffee.org</a>
+            <li>Examples</li>
+        </ul>
+        <div style="float:left;">
+            <code><script type="syntaxhighlighter" class="brush: js">
+                    //function definition in coffeescript
+                    square = (x) -> x * x 
+
+
+
+                    //object definition and method call
+                    greeter = hello: (name) -> alert "hello " + name
+
+                    greeter.hello "world"
+            </script></code>
+        </div>
+        <div style="float:left; margin-left: 20px">
+            <code><script type="syntaxhighlighter" class="brush: js">
+                    //javascript                           
+                    square = function(x) { 
                     return x * x;
                     };
+
+
+                    greeter = {
+                        hello: function(name) {
+                            alert("hello "+name)
+                        }
+                    }
+                    greeter.hello("world")
             </script></code>
+        </div>
+        </section>
+
+        <section class="slide" id="typescript">
+        <h2>Languages that improve JS</h2>
+        <h3>Types: TypeScript</h3>
+        <ul>
             <li>Microsoft's Typescript adds Types. Yay!
+            <li>Also adds classes (like proposed in ECMAScript6)
+            <li>Superset of javascript. So JS is valid TypeScript
             <code><script type="syntaxhighlighter" class="brush: js">
                     function greeter(person: string) {
-                    return "Hello, " + person;
+                        return "Hello, " + person;
                     };
                     greeter([1,2,3]);
 
@@ -290,15 +376,126 @@
         </ul>
         </section>
 
-        <section class="slide" id="supersets-2">
-        <h2>Superset languages</h2>
+        <section class="slide" id="supersets">
+        <h2>Coffescript, Typescript and relatives</h2>
         <ul>
-            <li>familiar syntax and programming model
+            <li>familiar syntax and programming model<br/>
+                -> easy to get started
             <li>Compilers available as node packages
             <li>tooling includes on-the-fly mode for development
             <li>CoffeeScript widely adopted. 
             <li>TypeScript adds what's lacking most: Types
         </ul>
+        </section>
+
+        <section class="slide" id="newlangs">
+        <h2>Completely new langs</h2>
+        <p>Functional langs: immutable, no side effects. higher-order-functions
+        <ul>
+            <li> <a href="">roy</a>
+            <li><a href="http://elm-lang.org/">elm</a>
+        </ul>
+        </section>
+
+        <section class="slide" id="roy">
+        <h2>roy</h2>
+        <ul>
+            <li>inspired by haskell. 
+            <li>experimental status
+            <li>tries to keep JS semantics. adds types and functional principles
+            <li>Interop with js as a goal
+            <li>Therefore not completely pure and immutable
+            <code><script type="syntaxhighlighter" class="brush: js">
+                    //wrap jquery $.Deferred() in a monad
+                    let deferred = {
+                        return: \x ->
+                          let d = $.Deferred ()
+                          d.resolve x
+                          d.promise ()
+                        bind: \x f -> x.pipe f
+                    }
+
+                    //concat two jquery $.ajax calls with that monad
+                    let v = do deferred
+                      hello <- $.ajax 'examples/helloworld.roy'
+                      alias <- $.ajax 'examples/alias.roy'
+                      return (hello ++ alias)
+
+                    //block for promises and send monad output to console.log
+                    v.done console.log
+            </script></code>
+            </li>
+        </ul>
+        </section>
+
+        <section class="slide" id="elm">
+        <h2>elm</h2>
+        <ul>
+            <li>"Functional Reactive Programming"
+            <li>avoid callbacks by providing "Signals" ( abstractions for time )
+            <li>Produces not only js, but also markup and CSS
+            <li>reason: maintain immutability
+            <li><a href="http://elm-lang.org/Examples.elm">Examples (external site)</a>
+        </ul>
+        </section>
+
+        <section class="slide" id="established-langs">
+        <h2>Establised Languages to JS</h2>
+        <h3>use established compilers</h3>
+        <p>These two bring established statically typed functional langs to JS</p>
+        <ul>
+            <li>Clojure -> JS: <a href="https://github.com/clojure/clojurescript">ClojureScript</a>
+            <li>Haskell (subset) -> JS: <a href="https://github.com/faylang/fay/wiki">Fay</a>
+        </ul>
+        <p>Compiling C/C++ is especially useful for porting 3D/games
+        <ul>
+            <li>C++ -> LLVM -> JS: <a href="https://github.com/kripken/emscripten/wiki">Emscripten</a>
+        </ul>
+        </section>
+
+        <section class="slide" id="hybrids">
+        <h2>Hybrid languages</h2>
+        <h3>Compile to multiple platforms - JS beeing one of them</h3>
+        <p>Some examples</p>
+        <ul>
+            <li><a href="">Ceylon</a>
+            <li><a href="">Kotlin</a>
+            <li><a href="">Fantom</a>
+            <li><a href="">Haxe</a>
+        </ul>
+        </section>
+
+
+        <section class="slide" id="future">
+        <h2>The future</h2>
+        <h3>asm.js</h3>
+        <ul>
+            <li>a spec defining a strict subset of javascript.
+            <li>intended as low-level, efficient target language for compilers
+            <li>prototype of an optimizing backend for asm.js in progress for Mozilla's SpiderMonkey engine
+            <li><a href="http://asmjs.org/spec/latest/">http://asmjs.org/spec/latest/</a>
+        </ul>
+        </section>
+
+
+        <section class="slide" id="others">
+        <h2>Honorable mentions</h2>
+        <ul>
+            <li>GWT
+            <ul>
+                <li>Compile Java to JS and markup
+                <li>probably the first x -> JS compiler (2006)
+            </ul>
+            <li>Dart
+            <ul>
+                <li>received mostly negative attention
+            </ul>
+        </ul>
+        </section>
+
+        <section class="slide" id="end">
+        <h2>The End.</h2>
+        <p>Slides: <a href="http://www.rompetroll.net/js-alternatives">http://www.rompetroll.net/js-alternatives</a></p>
         </section>
         <!-- End slides. -->
 
